@@ -5,11 +5,15 @@ import {v4 as uuidv4} from 'uuid';
 const AddExpense = () => {
 const {dispatch} = useContext(AppContext);
 
-const [values, setValues]= useState('');
+
 const [entry, setEntry] = useState('');
-const onSubmit = (event) => {
+const changeHandler = (event) => {
+setEntry(event.target.value)
+}
+
+const submitHandler = (event) => {
 event.preventDefault();
-setValues(entry.split(':').map(item => item.trim()));
+const values = entry.split(':').map(item => item.trim())
 const cost = parseInt(values[1])
 if (values)
 { const expense = {
@@ -21,16 +25,18 @@ if (values)
 dispatch({
   type:'ADD_EXPENSE',
   payload: expense,
-})
+});
+
+setEntry('')
 }; }
 
 
 return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={submitHandler}>
          <label htmlFor="entry">
           Add your expenses using the following pattern: Expense name : cost
         </label>
-        <input type="text" name="entry" placeholder="Expense: 100" id="entry" value={entry} required onChange={(event) => setEntry(event.target.value)}></input>
+        <input type="text" name="entry" placeholder="Expense: 100" id="entry" value={entry} required onChange={changeHandler}></input>
         <button type="submit">ADD</button>
   </form>
 );

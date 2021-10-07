@@ -25,13 +25,10 @@ const initialState = {
 export const AppContext = createContext();
 
 export const AppProvider = (props) => {
-	const [state, dispatch] = useReducer(AppReducer, initialState)
+	const [state, dispatch] = useReducer(AppReducer, initialState);
 
   useEffect(() => {
-    localStorage.setItem('userExpenses', JSON.stringify(state.expenses))
-    // return () => {
-    //   cleanup
-    // }
+    localStorage.setItem('userExpenses', JSON.stringify(state.expenses));
   })
 
   return (
