@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useReducer, useEffect } from 'react';
 
 const AppReducer = (state, action) => {
 	switch (action.type) {
@@ -19,14 +19,20 @@ const AppReducer = (state, action) => {
 
 const initialState = {
 	budget: 1000,
-	expenses: [
-	],
+	expenses: JSON.parse(localStorage.getItem('userExpenses'))|| [],
 };
 
 export const AppContext = createContext();
 
 export const AppProvider = (props) => {
 	const [state, dispatch] = useReducer(AppReducer, initialState)
+
+  useEffect(() => {
+    localStorage.setItem('userExpenses', JSON.stringify(state.expenses))
+    // return () => {
+    //   cleanup
+    // }
+  })
 
   return (
 		<AppContext.Provider
